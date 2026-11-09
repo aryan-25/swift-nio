@@ -14,7 +14,6 @@
 
 import Atomics
 import DequeModule
-import NIOConcurrencyHelpers
 import _NIODataStructures
 
 @usableFromInline
@@ -455,7 +454,7 @@ extension NIOAsyncWriter {
         internal let _yieldIDGenerator = YieldIDGenerator()
         /// The state machine.
         @usableFromInline
-        internal let _state: NIOLockedValueBox<State>
+        internal let _state: LockedValueBox<State>
 
         @usableFromInline
         struct State: Sendable {
@@ -495,7 +494,7 @@ extension NIOAsyncWriter {
             delegate: Delegate
         ) {
             let state = State(stateMachine: StateMachine(isWritable: isWritable, delegate: delegate))
-            self._state = NIOLockedValueBox(state)
+            self._state = LockedValueBox(state)
         }
 
         @inlinable

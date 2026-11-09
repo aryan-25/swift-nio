@@ -13,7 +13,6 @@
 //===----------------------------------------------------------------------===//
 
 import DequeModule
-import NIOConcurrencyHelpers
 
 /// This is an `AsyncSequence` that supports a unicast `AsyncIterator`.
 ///
@@ -423,7 +422,7 @@ extension NIOThrowingAsyncSequenceProducer {
         }
 
         @usableFromInline
-        internal let _state: NIOLockedValueBox<State>
+        internal let _state: LockedValueBox<State>
 
         @inlinable
         internal func _setDidSuspend(_ didSuspend: (@Sendable () -> Void)?) {
@@ -446,7 +445,7 @@ extension NIOThrowingAsyncSequenceProducer {
                 stateMachine: .init(backPressureStrategy: backPressureStrategy),
                 delegate: delegate
             )
-            self._state = NIOLockedValueBox(state)
+            self._state = LockedValueBox(state)
         }
 
         @inlinable
